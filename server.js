@@ -173,6 +173,27 @@ app.get('/api/auctions/:id', async (req, res) => {
     }
 });
 
+// delete
+app.delete('/api/auctions/:id', authenticateToken, async (req, res) => {
+    try {
+        const auction = await Auction.findById(req.params.id);
+
+        if (!auction) {
+            return res.status(404).json({ status: 'failure', message: 'Auction not found' });
+        }
+
+        if (auction.owner.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ status: 'failure', message: 'Unauthorized' });
+        }
+
+        await Auction.deleteOne({ _id: req.params.id });
+        res.status(200).json({ status: 'success', message: 'Auction deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting auction:', error);
+        res.status(500).json({ status: 'failure', message: 'Internal server error' });
+    }
+});
+
 // Error handling for Multer file uploads
 app.use('/api/auctions', (err, req, res, next) => {
     if (err instanceof multer.MulterError) {
