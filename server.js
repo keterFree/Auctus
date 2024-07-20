@@ -10,6 +10,7 @@ const { router: userRoutes, authenticateToken } = require('./routes/users');
 const Auction = require('./models/auction'); // Assuming you have an Auction model
 const multer = require('multer');
 const bidRoutes = require('./routes/bids');
+const Bid = require('./models/bid');
 // const authenticateToken = require('./middleware/auth');
 
 // Set up multer for file uploads
@@ -96,6 +97,8 @@ io.on('connection', (socket) => {
         console.log(`Bid placed in room ${auctionId} at ${bidAmount}`);
         try {
             const auction = await Auction.findById(auctionId);
+            const bidsList = await Bid.find({ auction_id: auctionId }).populate('user_id', 'username email');
+
             if (auction) {
                 // auction.bids.push({ amount: bidAmount, userId: socket.id });
                 // auction.currentBid = Math.max(auction.currentBid, bidAmount);
@@ -107,8 +110,11 @@ io.on('connection', (socket) => {
                     item_id: auctionId,
                     bids: auction.bidAmount,
                     top_bid: auction.currentBid,
+                    bidsList: bidsList
                 });
             }
+
+
         } catch (error) {
             console.error('Error placing bid:', error);
         }
@@ -144,6 +150,35 @@ app.post('/api/auctions/addAuction', authenticateToken, upload.single('picture')
         res.status(201).json({ status: 'success', auction });
     } catch (error) {
         console.error('Error saving auction:', error);
+        res.status(500).json({ status: 'failure', message: 'Internal server error' });
+    }
+});
+
+// Update auction bidEndTime
+app.patch('/api/auctions/:id/bidEndTime', authenticateToken, async (req, res) => {
+    const { bidEndTime } = req.body;
+
+    if (!bidEndTime) {
+        return res.status(400).json({ status: 'failure', message: 'bidEndTime is required' });
+    }
+
+    try {
+        const auction = await Auction.findById(req.params.id);
+
+        if (!auction) {
+            return res.status(404).json({ status: 'failure', message: 'Auction not found' });
+        }
+
+        if (auction.owner.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ status: 'failure', message: 'Unauthorized' });
+        }
+
+        auction.bidEndTime = bidEndTime;
+        await auction.save();
+
+        res.status(200).json({ status: 'success', auction });
+    } catch (error) {
+        console.error('Error updating bidEndTime:', error);
         res.status(500).json({ status: 'failure', message: 'Internal server error' });
     }
 });
