@@ -367,7 +367,7 @@ async function deleteAuction() {
     const auctionId = localStorage.getItem('currentBid');
     const token = localStorage.getItem('token');
 
-    const confirmDelete = confirm('Are you sure you want to delete this auction? You can re-open it later.');
+    const confirmDelete = confirm('Are you sure you want to delete this auction? It cannot be undone.');
     if (!confirmDelete) {
         return;
     }
