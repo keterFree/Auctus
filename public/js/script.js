@@ -40,6 +40,7 @@ if (itemForm !== null) {
         }
     });
 }
+
 function register() {
     const username = document.getElementById('reg-username').value;
     const password = document.getElementById('reg-password').value;

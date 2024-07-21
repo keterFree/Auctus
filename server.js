@@ -11,7 +11,6 @@ const Auction = require('./models/auction'); // Assuming you have an Auction mod
 const multer = require('multer');
 const bidRoutes = require('./routes/bids');
 const Bid = require('./models/bid');
-// const authenticateToken = require('./middleware/auth');
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
@@ -24,6 +23,9 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+// Replace with your own ImgBB API key
+const API_KEY = '06c5f08150c0728c9d876663992aa231';
 
 const app = express();
 const server = http.createServer(app);
@@ -100,10 +102,6 @@ io.on('connection', (socket) => {
             const bidsList = await Bid.find({ auction_id: auctionId }).populate('user_id', 'username email');
 
             if (auction) {
-                // auction.bids.push({ amount: bidAmount, userId: socket.id });
-                // auction.currentBid = Math.max(auction.currentBid, bidAmount);
-                // await auction.save();
-
                 console.log(`Broadcasting to room ${auctionId} a bid of ${bidAmount}`);
                 io.to(auctionId).emit('bidUpdate', {
                     type: 'update_bids',
@@ -125,9 +123,11 @@ io.on('connection', (socket) => {
     });
 });
 
-// Auction routes
-// Create a new auction with picture upload
-app.post('/api/auctions/addAuction', authenticateToken, upload.single('picture'), async (req, res) => {
+const fs = require('fs');
+const axios = require('axios');
+const FormData = require('form-data');
+
+app.post('/api/auctions/addAuction', authenticateToken, async (req, res) => {
     const { itemName, description, startingBid, bidEndTime } = req.body;
     const picture = req.file ? req.file.path : null;
 
@@ -136,13 +136,35 @@ app.post('/api/auctions/addAuction', authenticateToken, upload.single('picture')
         return res.status(400).json({ status: 'failure', message: 'All fields are required' });
     }
 
+    let pictureUrl = null;
+    if (picture) {
+        try {
+            // Read the image file
+            const imageFile = fs.readFileSync(picture);
+            const formData = new FormData();
+            formData.append('key', API_KEY);
+            formData.append('image', imageFile.toString('base64'));
+
+            // Upload image to ImgBB
+            const imgResponse = await axios.post('https://api.imgbb.com/1/upload', formData, {
+                headers: formData.getHeaders(),
+            });
+
+            pictureUrl = imgResponse.data.data.url;
+            console.log(pictureUrl);
+        } catch (error) {
+            console.error('Error uploading image to ImgBB:', error);
+            return res.status(500).json({ status: 'failure', message: 'Image upload failed' });
+        }
+    }
+
     const auction = new Auction({
         itemName: itemName,
         description: description,
         startingBid: startingBid,
         owner: req.user._id,
         bidEndTime: bidEndTime,
-        picture: picture,
+        picture: pictureUrl,
     });
 
     try {
@@ -153,6 +175,8 @@ app.post('/api/auctions/addAuction', authenticateToken, upload.single('picture')
         res.status(500).json({ status: 'failure', message: 'Internal server error' });
     }
 });
+
+
 
 // Update auction bidEndTime
 app.patch('/api/auctions/:id/bidEndTime', authenticateToken, async (req, res) => {

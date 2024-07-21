@@ -209,8 +209,7 @@ function validSession() {
         } else {
             localStorage.clear();
             if (
-                (window.location.pathname !== '/index.html' && window.location.pathname !== '/') &&
-                (window.location.pathname !== '/explore.html' && window.location.pathname !== '/explore')
+                (window.location.pathname !== '/index.html' && window.location.pathname !== '/')
             ) {
                 window.location.href = '/login';
             }
