@@ -1,0 +1,132 @@
+:root {
+    --primary-color: #2f2f2f;
+    --text-dark: #18181b;
+    --text-light: #71717a;
+    --white: #ffffff;
+    --header-font: "Lora", serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    justify-content: space-between;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1vh;
+    padding: 4vh 10vw;
+    flex: 1;
+}
+
+input,
+textarea {
+    box-shadow: 20vw black;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--header-font);
+}
+
+.input {
+    position: relative;
+    padding: 2vh 0;
+    width: 100%;
+}
+
+.form__label {
+    font-size: large;
+    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out, font-size 0.5s ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+@media (width >600px) {
+
+    #cinput {
+        display: flex;
+        gap: 2vw;
+    }
+}
+
+#cinput .input:nth-child(2) .form__label,
+#upload_img label {
+    opacity: 1;
+    font-size: small;
+    top: 0;
+}
+
+input:active~.form___label {
+    display: none;
+}
+
+.input input:focus+.form__label,
+.input textarea:focus+.form__label,
+.input:hover .form__label {
+    opacity: 1;
+    font-size: small;
+    top: 0;
+}
+
+button {
+    padding: 11px 12px;
+    font-size: 1.25rem;
+    outline: none;
+    border: none;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(24, 7, 7, 0.833);
+    /* Darker reddish color */
+}
+
+button:active {
+    background-color: rgba(24, 7, 7, 0.833);
+    /* Even darker reddish color */
+}
+
+#upload_img input {
+    padding: 10px 0;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#upload_img input:hover {
+    background-color: #e0e0e0;
+}
+
+#upload_img input:active {
+    background-color: #d0d0d0;
+}
+
+#preview {
+    display: none;
+}

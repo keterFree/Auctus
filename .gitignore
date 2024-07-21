@@ -65,7 +65,7 @@ bower_components/
 
 # Gatsby files
 .cache/
-public/
+
 
 # VuePress build output
 .vuepress/dist/

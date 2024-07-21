@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Auction System</title>
+    <link rel="stylesheet" type="text/css" href="styles/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/formstyle.css">
+    <link rel="stylesheet" type="text/css" href="styles/bidstyles.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav>
+            <div class="nav__logo">
+                <img src="assets/gavel.png" alt="">
+                <a href="#">Auctus</a>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li class="link"><a href="index.html">Home</a></li>
+                <li class="link"><a href="index.html#choose">About</a></li>
+                <li class="link"><a href="index.html#craft">Bid</a></li>
+                <li class="link"><a href="explore.html"><b>Explore</b></a></li>
+                <li class="link"><a href="item.html">Submit a product</a></li>
+            </ul>
+            <div class="nav__menu__btn" id="menu-btn">
+                <span><i class="ri-menu-line"></i></span>
+            </div>
+            <div class="nav__actions" id="log_action">
+                <div id="log-div">
+                    <i class="ri-user-fill" id="log-icon"></i>
+                    <div id="log-out" class="logged">Log out</div>
+                </div>
+                <div id="log-name">Log in</div>
+            </div>
+        </nav>
+    </header>
+    <div id="auction-details">
+        <div id="left">
+            <h2 id="auction-item-name"></h2>
+            <img id="auction-picture" src="" alt="Auction Picture" style="display: none;">
+        </div>
+        <div id="right">
+            <small><i>Auctus auction id <span id="auction-id"></span> </i></small>
+            <div>
+                <div>
+                    <p id="auction-description"></p>
+                </div>
+                <div>
+                    <p>auctuined by:</p>
+                    <span id="auction-owner"></span>
+                </div>
+                <div id="starting-div">
+                    <span>Starting Bid:</span>
+                    <span id="auction-starting-bid"></span>
+                </div>
+                <div>
+                    <h3 id="auction-top-bid"></h3>
+                </div>
+                <div id="deadline-div">
+                    <span>Deadline: </span>
+                    <span id="auction-bid-end-time"></span>
+                </div>
+                <div id="coutdown">
+                    <span>Closes in: </span>
+                    <span id="auction-remaining-time"></span>
+                </div>
+            </div>
+            <div class="confirmButtons">
+                <button id="view-bid-auction">BID</button>
+                <button id="delete-auction" class="hide" onclick="deleteAuction()">Delete Item</button>
+            </div>
+            <div id="bid-form" class="hide">
+                <p>You have <span id="countdown-timer">10</span>s to place your bid</p>
+                <input type="number" id="bid-amount" placeholder="Bid Amount">
+                <div id="formButton">
+                    <button onclick="confirmBid()">Place Bid</button>
+                    <button onclick="cancelBid()">Cancel</button>
+                </div>
+            </div>
+            <div id="confirm-form" class="hide">
+                <p>Confirm your bid amount: <b> Ksh. <span id="confirm-bid-amount"></span></b></p>
+                <p>Auto-confirming in <span id="confirm-countdown">10</span>s</p>
+                <div class="confirmButtons">
+                    <button onclick="placeBid()">Confirm</button>
+                    <button onclick="cancelConfirmation()">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="auction-container-1">
+            <h2>Bids Details</h2>
+            <ul id="bids-list-1"></ul>
+        </div>
+    </div>
+    <div class="auction-container-2">
+        <h2>Bids Details</h2>
+        <ul id="bids-list-2"></ul>
+    </div>
+
+    <p>copyrigt keter titus 2024</p>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
+
+
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="js/script.js"></script>
+<script src="js/bid.js"></script>
+<script src="js/main.js"></script>

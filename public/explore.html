@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Site</title>
+    <link rel="stylesheet" type="text/css" href="styles/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/explore.css">
+
+</head>
+
+<body>
+    <header class="header">
+        <nav>
+            <div class="nav__logo">
+                <img src="assets/gavel.png" alt="">
+                <a href="#">Auctus</a>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li class="link"><a href="index.html">Home</a></li>
+                <li class="link"><a href="index.html#choose">About</a></li>
+                <li class="link"><a href="index.html#craft">Bid</a></li>
+                <li class="link"><a href="explore.html"><b>Explore</b></a></li>
+                <li class="link"><a href="item.html">Submit a product</a></li>
+            </ul>
+            <div class="nav__menu__btn" id="menu-btn">
+                <span><i class="ri-menu-line"></i></span>
+            </div>
+            <div class="nav__actions" id="log_action">
+                <div id="log-div">
+                    <i class="ri-user-fill" id="log-icon"></i>
+                    <div id="log-out" class="logged">Log out</div>
+                </div>
+                <div id="log-name">Log in</div>
+            </div>
+        </nav>
+    </header>
+    <div id="auctions-main-container">
+        <img class="watermark" id="gavel" src="assets/gavelart.png" alt="">
+        <img class="watermark" id="auctioneer2" src="assets/autioneer2.gif" alt="">
+        <h2>Explore Items on Auction</h2>
+        <button id="filter-btn">View my products</button>
+        <div id="auctions-container"></div>
+    </div>
+    <div>footer</div>
+    <script src="js/auctions.js"></script>
+    <script src="js/main.js"></script>
+</body>
+<script>
+   
+</script>
+</html>
