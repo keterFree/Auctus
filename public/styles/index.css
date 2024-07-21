@@ -302,7 +302,7 @@ nav {
 
 .craft__image__content img {
     margin-bottom: 1rem;
-    max-width: 250px;
+    max-width: 300px;
     aspect-ratio: 7/8;
     object-fit: cover;
     object-position: center;
@@ -501,6 +501,15 @@ nav {
 }
 
 @media (max-width: 600px) {
+    .craft__image__content img {
+        margin-bottom: 1rem;
+        max-width: 100%;
+        aspect-ratio: 7/8;
+        object-fit: cover;
+        object-position: center;
+        box-sizing: cover;
+        margin: 0;
+    }
     nav {
         position: fixed;
         width: 100%;

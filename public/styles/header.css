@@ -93,13 +93,13 @@ nav {
     cursor: pointer;
 }
 
-@media (width < 900px) {
+@media (max-width: 900px) {
     .nav__actions {
         display: none;
     }
 }
 
-@media (width < 600px) {
+@media (max-width: 600px) {
     nav {
         width: 100%;
         padding: 1rem;
@@ -142,7 +142,7 @@ nav {
     }
 }
 
-@media (width > 600px) {
+@media (min-width: 600px) {
     header nav {
         display: flex;
         justify-content: space-evenly;
@@ -168,7 +168,6 @@ nav {
     display: flex;
     gap: 2vw;
     align-items: center;
-
 }
 
 #log-name {
