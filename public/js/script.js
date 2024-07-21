@@ -13,6 +13,18 @@ if (itemForm !== null) {
         formData.append('bidEndTime', document.getElementById('bid-end-time').value);
         formData.append('picture', document.getElementById('picture').files[0]);
 
+        alert(`
+${document.getElementById('item-name').value}
+${document.getElementById('description').value}
+${document.getElementById('starting-bid').value}
+${document.getElementById('bid-end-time').value}
+data:
+${formData.get('itemName')}
+${formData.get('description')}
+${formData.get('startingBid')}
+${formData.get('bidEndTime')}
+`);
+
         const token = localStorage.getItem('token');
 
         try {
@@ -23,10 +35,6 @@ if (itemForm !== null) {
                 },
                 body: formData
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
 
             const data = await response.json();
             if (data.status === 'success') {
@@ -73,7 +81,6 @@ function login() {
                 token = data.token;
                 localStorage.setItem('token', token);
                 localStorage.setItem('name', username);
-                //   localStorage.setItem('email', token);
                 window.location.href = 'index.html';
             } else {
                 alert('Login failed');
@@ -93,4 +100,9 @@ function initWebSocket() {
             updateBids(data.item_id, data.bids);
         }
     };
+}
+
+function updateBids(item_id, bids) {
+    // Update bids in the UI
+    console.log(`Update bids for item ${item_id}:`, bids);
 }
