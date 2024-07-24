@@ -6,8 +6,14 @@ exports.socketHandler = (io) => {
         console.log('New client connected');
 
         // events
-        socket.on('joinAuction', joinAuction);
-        socket.on('placeBid', placeBid);
+        socket.on('joinAuction', (auctionId) => {
+            joinAuction(socket, auctionId);
+        });
+
+        socket.on('placeBid', (data) => {
+            placeBid(io, data);
+        });
+
         socket.on('disconnect', () => {
             console.log('Client disconnected');
         });

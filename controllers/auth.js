@@ -16,17 +16,24 @@ exports.register = async (req, res) => {
 
 // User login endpoint
 exports.login = async (req, res) => {
+    console.log('login endpoint')
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
         if (!user) {
+            console.log('user not found')
             return res.status(404).json({ status: 'failure', message: 'User not found' });
         }
+
+        console.log('found user: ', user)
         
         const isValidPassword = await user.comparePassword(password);
         if (!isValidPassword) {
+            console.log('invalid password')
             return res.status(401).json({ status: 'failure', message: 'Invalid password' });
         }
+
+        console.log('passwordValid: true')
 
         const token = jwt.sign(
             { userId: user._id, username: user.username },
@@ -36,7 +43,7 @@ exports.login = async (req, res) => {
 
         res.json({ status: 'success', token });
     } catch (error) {
-        console.error('Error logging in user:', error);
+        console.log('Error logging in user:', error);
         res.status(500).json({ status: 'failure', message: 'Internal server error' });
     }
 }
